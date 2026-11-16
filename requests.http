@@ -1,0 +1,60 @@
+### 1. Все компании и фильтр по городу
+GET http://127.0.0.1:3000/v1/companies?location=London
+
+### 2. Вакансии конкретной компании (ассоциация)
+GET http://127.0.0.1:3000/v1/companies/4/jobs
+
+### 3. Все вакансии и фильтр
+GET http://127.0.0.1:3000/v1/jobs?place=Remote
+
+### 4. Создание вакансии с ошибкой валидации (без company_id)
+POST http://127.0.0.1:3000/v1/jobs
+Content-Type: application/json
+
+{
+  "name": ".NET",
+  "place": "Minsk"
+}
+
+### 5. Успешное создание вакансии
+POST http://127.0.0.1:3000/v1/jobs
+Content-Type: application/json
+
+{
+  "name": "JS Angular",
+  "place": "Tomsk",
+  "company_id": 4
+}
+
+### 6. Создание компании
+POST http://127.0.0.1:3000/v1/companies
+Content-Type: application/json
+
+{
+  "name": "Malta",
+  "location": "Minsk"
+}
+
+### 7. Мягкое удаление компании (подставьте id созданной компании, например 5)
+PUT http://127.0.0.1:3000/v1/companies/5/mark_deleted
+
+### 8. Повторное мягкое удаление (должно вернуть deleted_already: not_modified)
+PUT http://127.0.0.1:3000/v1/companies/5/mark_deleted
+
+### 9. Физическое удаление компании
+DELETE http://127.0.0.1:3000/v1/companies/5
+
+### 10. Проверка откликов соискателя и отметки прочтения/приглашения
+GET http://127.0.0.1:3000/v1/geeks/2/applies
+
+### 11. Обновление отклика (прочитать и пригласить)
+PUT http://127.0.0.1:3000/v1/applies/2
+Content-Type: application/json
+
+{
+  "read": true,
+  "invited": true
+}
+
+### 12. Проверка перехвата несуществующего маршрута (catch_404)
+GET http://127.0.0.1:3000/jobs
